@@ -100,9 +100,10 @@
     <button class="dialog-close" data-action="close-share" aria-label="关闭">×</button>
     <p class="eyebrow">SHARE YOUR DNA</p>
     <h2>长按保存<br>你的快乐名片</h2>
-    <canvas id="shareCanvas" width="1080" height="1440" aria-label="测试结果分享卡"></canvas>
-    <div class="share-actions"><button class="primary compact" data-action="download-card">保存图片</button><button class="secondary" data-action="native-share">分享链接</button></div>
-    <p class="fineprint">在微信内可保存图片后发送给朋友，或点右上角分享当前页面。</p>
+    <canvas id="shareCanvas" width="1080" height="1440" hidden></canvas>
+    <img id="shareImage" class="share-image" alt="测试结果分享海报，可长按保存">
+    <div class="share-actions"><button class="primary compact" data-action="download-card">保存 / 分享图片</button><button class="secondary" data-action="native-share">分享链接</button></div>
+    <p class="fineprint">微信内可直接长按上方海报选择“保存图片”；其他浏览器会优先打开系统分享菜单。</p>
   </dialog>
   <script src="./app.js"></script>
 </body>
