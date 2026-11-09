@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f7f1e8">
+  <meta name="description" content="你的钱，究竟在为哪种快乐买单？用 3 分钟探索你的 App 付费 DNA。">
+  <meta property="og:title" content="App 付费 DNA｜你的钱花给了哪种快乐？">
+  <meta property="og:description" content="6 种快乐，12 道选择题，看看你的数字消费偏好。">
+  <meta property="og:type" content="website">
+  <title>App 付费 DNA｜你的钱花给了哪种快乐？</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <main id="app">
+    <section class="screen active" id="intro" aria-labelledby="intro-title">
+      <nav class="topbar"><span class="brand">PAY / DNA</span><button class="text-btn" data-action="privacy">隐私说明</button></nav>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-a"><span>✦</span></div><div class="orbit orbit-b"><span>¥</span></div>
+        <div class="coin"><span>花</span><small>得其乐</small></div>
+      </div>
+      <p class="eyebrow">APP 付费偏好趣味测试 · V1.3</p>
+      <h1 id="intro-title">你的钱<br>花给了哪种快乐？</h1>
+      <p class="lead">有人为效率买单，有人为一眼心动。<br>用 3 分钟，看看你在数字世界里最舍得守护什么。</p>
+      <div class="mini-stats"><span><b>12</b> 道选择</span><i></i><span><b>6</b> 种快乐</span><i></i><span><b>0</b> 条付款记录</span></div>
+      <button class="primary" data-action="start">开始拆解我的快乐 <span>↗</span></button>
+      <p class="fineprint">无需登录 · 不收集敏感付款信息 · 结果仅供趣味自我探索</p>
+    </section>
+
+    <section class="screen" id="recall" aria-labelledby="recall-title">
+      <nav class="topbar"><button class="back" data-action="back-intro" aria-label="返回">←</button><span class="step-label">热身 · 可跳过</span><span></span></nav>
+      <div class="section-mark">01 / MEMORY</div>
+      <h2 id="recall-title">先想起一笔<br><em>不后悔</em>的 App 消费</h2>
+      <p class="body-copy">它不一定最贵，只要是你现在想起来，仍觉得“值”的那一笔。后面两道情境题会直接用它举例，让选择更贴近你的真实经验。</p>
+      <label class="field-label" for="appName">它是什么？</label>
+      <input id="appName" maxlength="24" placeholder="例如：DAZZ 相机 / 微信读书" autocomplete="off">
+      <label class="field-label">当时最打动你的是什么？</label>
+      <div class="chips" id="recallChips">
+        <button data-value="好看">好看</button><button data-value="有用">有用</button><button data-value="喜欢">喜欢</button><button data-value="想拥有">想拥有</button><button data-value="能成长">能成长</button><button data-value="自由发挥">自由发挥</button>
+      </div>
+      <div class="bottom-actions"><button class="secondary" data-action="skip-recall">跳过</button><button class="primary compact" data-action="begin-quiz">带着它出发 →</button></div>
+    </section>
+
+    <section class="screen" id="quiz" aria-live="polite">
+      <nav class="topbar"><button class="back" data-action="prev" aria-label="上一题">←</button><span class="step-label" id="progressText">01 / 12</span><button class="text-btn" data-action="privacy">隐私</button></nav>
+      <div class="progress"><span id="progressBar"></span></div>
+      <div id="questionWrap"></div>
+    </section>
+
+    <section class="screen" id="loading" aria-live="polite">
+      <div class="loader-orbit"><span></span><b>DNA</b></div>
+      <p class="eyebrow">正在拼合你的快乐配方</p>
+      <h2>读一读你的<br>付费小宇宙…</h2>
+      <div class="loading-line"><i></i></div>
+      <p class="fineprint">不是算命，只是把你的选择照亮一点。</p>
+    </section>
+
+    <section class="screen" id="result" aria-labelledby="result-title">
+      <nav class="topbar"><span class="brand">YOUR / DNA</span><button class="text-btn" data-action="privacy">说明</button></nav>
+      <div class="result-ticket">
+        <div class="ticket-top"><span>APP PAY DNA · V1.3</span><span id="resultCode">NO. 000000</span></div>
+        <p class="eyebrow">你的付费快乐原型是</p>
+        <h2 id="result-title">灵感导演</h2>
+        <p class="result-tagline" id="resultTagline"></p>
+        <div class="result-tags"><span id="primaryTag">创造自主</span><span id="secondaryTag">审美愉悦</span></div>
+      </div>
+      <section class="result-section">
+        <div class="section-head"><h3>快乐配方</h3><span>你的六维倾向</span></div>
+        <div class="bars" id="scoreBars"></div>
+      </section>
+      <section class="result-section accent-panel">
+        <p class="eyebrow">YOUR SWEET SPOT</p>
+        <h3 id="topMeaning"></h3>
+        <p id="topDescription"></p>
+      </section>
+      <section class="result-section">
+        <div class="section-head"><h3>现实刹车片</h3><span>不是扫兴，是保护快乐</span></div>
+        <div id="constraintCards" class="constraint-grid"></div>
+      </section>
+      <section class="result-section recall-result" id="recallResult"></section>
+      <section class="result-section note">
+        <h3>读结果的小提醒</h3>
+        <p>这是未经验证的趣味自我探索工具，不是科学人格诊断，也不评价“该不该花钱”。偏好会随情境、预算和人生阶段变化。</p>
+      </section>
+      <div class="result-actions"><button class="primary" data-action="share">生成我的分享卡 <span>↗</span></button><button class="secondary" data-action="restart">重新测试</button></div>
+      <p class="fineprint footer-note">答案不会上传；刷新或关闭页面后，本次填写将不再保留。</p>
+    </section>
+  </main>
+
+  <dialog id="privacyDialog">
+    <button class="dialog-close" data-action="close-dialog" aria-label="关闭">×</button>
+    <p class="eyebrow">PRIVACY · 隐私提示</p>
+    <h2>这份测试<br>只认识此刻的你</h2>
+    <ul><li>无需登录，不要求姓名、手机号或付款记录。</li><li>填写内容仅在当前页面内用于即时计算，不会上传。</li><li>“真实 App 回忆”完全可跳过，请勿填写账号或订单等敏感信息。</li><li>结果是趣味解释，不构成消费、心理或财务建议。</li></ul>
+    <button class="primary compact" data-action="close-dialog">明白了</button>
+  </dialog>
+
+  <dialog id="shareDialog" class="share-dialog">
+    <button class="dialog-close" data-action="close-share" aria-label="关闭">×</button>
+    <p class="eyebrow">SHARE YOUR DNA</p>
+    <h2>长按保存<br>你的快乐名片</h2>
+    <canvas id="shareCanvas" width="1080" height="1440" aria-label="测试结果分享卡"></canvas>
+    <div class="share-actions"><button class="primary compact" data-action="download-card">保存图片</button><button class="secondary" data-action="native-share">分享链接</button></div>
+    <p class="fineprint">在微信内可保存图片后发送给朋友，或点右上角分享当前页面。</p>
+  </dialog>
+  <script src="./app.js"></script>
+</body>
+</html>

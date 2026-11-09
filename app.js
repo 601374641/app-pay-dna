@@ -1,0 +1,65 @@
+const dimensions={
+  aesthetic:{name:'审美愉悦',short:'美',color:'#ff6b4a',meaning:'你愿意为“看见就开心”买单',description:'质感、风格与氛围不是外壳，而是体验本身。真正打动你的设计，会让普通的一天突然变得值得纪念。'},
+  growth:{name:'成长能力',short:'长',color:'#2451d4',meaning:'你把钱变成了更好的自己',description:'你偏爱那些能带来练习、反馈与进步感的付费。花出去的钱，最好能在未来的你身上留下痕迹。'},
+  utility:{name:'结果效用',short:'效',color:'#268e75',meaning:'你为确定的结果和省下的时间鼓掌',description:'对你而言，付费是一条更短、更稳的路径。只要问题解决得漂亮，过程不必过度浪漫。'},
+  identity:{name:'内容情感认同',short:'认',color:'#c53172',meaning:'你支持的不只是内容，也是“我认同谁”',description:'独家内容、创作者视角与价值共鸣，会让付费像一次温柔的投票：请继续做下去。'},
+  collection:{name:'收藏满足',short:'藏',color:'#d89b25',meaning:'拥有本身，就能让你感到圆满',description:'限定、完整与“终于收入囊中”的时刻，会给你清晰的满足。你珍惜数字物件承载的记忆与稀有感。'},
+  autonomy:{name:'创造自主',short:'创',color:'#7867ff',meaning:'你为更多可能性与掌控感买单',description:'模板只是起点。你更看重自由搭配、反复修改和亲手做出独特结果的空间。'}
+};
+
+const questions=[
+ {q:()=>`${scenarioApp()} 推出三种同价升级，你更想选哪一种？`,hint:'就按你使用这个 App 时的真实需求来选。',o:[['A','一套效果很出彩的成品方案','打开就能获得我喜欢的风格',{aesthetic:3,collection:1}],['B','更丰富的自定义能力','可以按自己的想法反复调整',{autonomy:3,aesthetic:1}],['C','更省步骤的一键功能','快速得到结果，少花时间',{utility:3,growth:1}]]},
+ {q:'一个 App 最容易让你按下“订阅”的瞬间是？',hint:'想象付款按钮已经亮起。',o:[['A','它让我立刻省下很多时间','结果清晰，马上能解决问题',{utility:3}],['B','它让我看见持续进步的可能','愿意用一段时间换成长',{growth:3}],['C','它的整体气质太对我胃口','每天打开都觉得舒服',{aesthetic:3}]]},
+ {q:'喜欢的创作者推出付费专区，你首先在意？',hint:'没有标准答案，只有真实动机。',o:[['A','是否有真正独家的内容','公开渠道找不到才值得',{identity:3,utility:1}],['B','能否表达对创作者的支持','我想让喜欢的内容继续',{identity:3,collection:1}],['C','有没有可保存的限定纪念','最好是错过就不再有',{collection:3,identity:1}]]},
+ {q:'你购买一套数字工具后，最享受哪个阶段？',hint:'把“应该”放一边。',o:[['A','第一次做出漂亮成品','效果出现的那一刻最爽',{aesthetic:2,utility:2}],['B','慢慢摸熟、能力升级','过程本身让我上瘾',{growth:3}],['C','不断拆改出自己的玩法','规则越少，空间越大',{autonomy:3}]]},
+ {q:()=>`${scenarioApp()} 上线一项付费升级，什么最可能促成购买？`,hint:'选那个最难抵抗的理由。',o:[['A','它正好在我的审美点上','审美合拍比稀有更重要',{aesthetic:2,autonomy:2}],['B','它是限时的，错过会遗憾','想拥有的冲动比使用频率更强',{collection:3}],['C','它能让我少绕几步','更顺手地完成原本想做的事',{utility:3}]]},
+ {q:'如果只能为一个功能付费，你选？',hint:'预算只能投给一边。',o:[['A','专业人士的反馈与监督','有人带着走，更容易坚持',{growth:3,identity:1}],['B','自动化完成繁琐步骤','把时间还给自己',{utility:3}],['C','开放全部素材与编辑权限','我想自己决定怎么做',{autonomy:3}]]},
+ {q:'数字收藏对你最有吸引力的部分是？',hint:'哪一句更接近你心里的“拥有”？',o:[['A','它记录了某个重要时刻','收藏是记忆的容器',{collection:3,identity:1}],['B','它的设计让我反复欣赏','拥有美，也是一种使用',{aesthetic:3,collection:1}],['C','它能成为二次创作的素材','拿来创造，比摆着更有趣',{autonomy:3}]]},
+ {q:'一次付费学习，怎样才算“值回票价”？',hint:'想想你会向朋友怎么解释。',o:[['A','我真的掌握了一项能力','改变能被自己感觉到',{growth:3}],['B','它帮我完成了明确目标','结果落地最重要',{utility:3}],['C','老师或社群让我持续投入','人与内容共同构成体验',{identity:2,growth:2}]]},
+ {q:'面对一款很喜欢但偏贵的 App，你通常？',hint:'这一题会影响你的“现实刹车片”。',constraint:'price',o:[['A','先找替代品，差不多就行','喜欢也要经得起比较',{price:3,substitute:3}],['B','等打折或试用后再决定','让时间验证它是否必要',{price:2,service:1}],['C','只要足够喜欢就直接买','心动本身就是价值',{price:0,substitute:0}]]},
+ {q:'买下数字产品后，哪件事最让你安心？',hint:'这里没有真正的“永久”，只有你更在意什么。',constraint:'boundary',o:[['A','可以导出、备份或迁移','不想被平台锁住',{boundary:3,service:1}],['B','团队会长期维护和更新','持续服务比形式上的买断重要',{service:3,boundary:1}],['C','一次付费，不再反复续订','支出边界要清清楚楚',{price:2,boundary:2}]]},
+ {q:'功能相近时，什么会让你选择付费而不是免费？',hint:'把宣传语都关掉，只留真正的差别。',o:[['A','付费版更稳定、更省步骤','确定性值得付钱',{utility:3,service:1}],['B','付费版的内容更有灵魂','我认同它背后的人和观点',{identity:3}],['C','付费版能做出更独特的东西','自由度决定上限',{autonomy:3}]]},
+ {q:'最后一题：哪种“快乐”最像你的理想消费？',hint:'凭直觉收尾。',o:[['A','它让我每天都更喜欢自己的生活','美感与认同，把日常变亮',{aesthetic:2,identity:2}],['B','它让我成为更厉害、更从容的人','成长与效率，带来真实变化',{growth:2,utility:2}],['C','它让我拥有并创造独属于我的东西','收藏与自由，保留个人痕迹',{collection:2,autonomy:2}]]}
+];
+
+const labels={
+ 'aesthetic+autonomy':['灵感导演','你不是在买功能，你在给想象力添置舞台。'],
+ 'aesthetic+collection':['美学藏家','好看值得被拥有，而拥有让美有了归处。'],
+ 'aesthetic+growth':['生活练习生','你把变好这件事，做得既认真又漂亮。'],
+ 'aesthetic+identity':['共鸣造梦家','审美让你停下，共鸣让你留下。'],
+ 'aesthetic+utility':['质感实用派','既要解决问题，也不要委屈眼睛。'],
+ 'autonomy+collection':['宇宙收藏家','你收下稀有，也亲手赋予它新的意义。'],
+ 'autonomy+growth':['自由进化者','最好的教程，是给你方法后把方向盘交还。'],
+ 'autonomy+identity':['有态度的创作者','你愿意支持同路人，也坚持留下自己的版本。'],
+ 'autonomy+utility':['效率建筑师','工具要趁手，流程要由你重新设计。'],
+ 'collection+growth':['成就收集者','每一份拥有，都是成长路上的实体勋章。'],
+ 'collection+identity':['共鸣典藏家','你收藏的不是文件，是故事、立场与某个时刻。'],
+ 'collection+utility':['目标猎手','值得收入囊中的，最好也能真正派上用场。'],
+ 'growth+identity':['同行成长派','你相信好的陪伴，能让坚持变得更长久。'],
+ 'growth+utility':['进阶执行官','花钱不是捷径，是给行动装上更好的引擎。'],
+ 'identity+utility':['价值实干家','既要真诚共鸣，也要内容确实有料。']
+};
+
+const state={index:0,answers:[],recall:'',recallTag:'',scores:{},constraints:{price:0,substitute:0,boundary:0,service:0},result:null};
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const qrImage=new Image();qrImage.src='./qr.svg';qrImage.onload=()=>{if(state.result)drawCard()};
+function scenarioApp(){return state.recall?`你刚想到的「${state.recall}」`:'你常用的一款 App'}
+function show(id){$$('.screen').forEach(x=>x.classList.toggle('active',x.id===id));window.scrollTo({top:0,behavior:'instant'});}
+function resetScores(){state.scores=Object.fromEntries(Object.keys(dimensions).map(k=>[k,0]));state.constraints={price:0,substitute:0,boundary:0,service:0};}
+function renderQuestion(){const q=questions[state.index],questionText=typeof q.q==='function'?q.q():q.q;$('#progressText').textContent=String(state.index+1).padStart(2,'0')+' / '+questions.length;$('#progressBar').style.width=((state.index+1)/questions.length*100)+'%';$('#questionWrap').innerHTML=`<article class="question-card"><div class="question-no">${String(state.index+1).padStart(2,'0')}</div><h2>${escapeHtml(questionText)}</h2><p class="question-hint">${q.hint}</p><div class="options">${q.o.map((o,i)=>`<button class="option" data-option="${i}"><span class="option-key">${o[0]}</span><span><strong>${o[1]}</strong><small>${o[2]}</small></span></button>`).join('')}</div><p class="question-foot">选择后自动进入下一题</p></article>`;$$('[data-option]').forEach(b=>b.onclick=()=>choose(+b.dataset.option));}
+function choose(i){state.answers[state.index]=i;if(state.index<questions.length-1){state.index++;renderQuestion();}else{calculate();show('loading');setTimeout(()=>{renderResult();show('result')},1550)}}
+function calculate(){resetScores();questions.forEach((q,qi)=>{const pick=q.o[state.answers[qi]]?.[3]||{};Object.entries(pick).forEach(([k,v])=>{if(k in state.scores)state.scores[k]+=v;else if(k in state.constraints)state.constraints[k]+=v})});const ranked=Object.entries(state.scores).sort((a,b)=>b[1]-a[1]);const pair=[ranked[0][0],ranked[1][0]].sort().join('+');const max=Math.max(...Object.values(state.scores));const normalized=Object.fromEntries(Object.entries(state.scores).map(([k,v])=>[k,Math.round(48+v/max*48)]));state.result={ranked,pair,label:labels[pair]||['快乐调配师','你不把快乐押在单一答案上，而是亲手调出自己的比例。'],normalized};}
+function constraintInfo(){const c=state.constraints;const out=[];if(c.price+c.substitute>=5)out.push(['价格与替代敏感','会先比较、试用或等待；喜欢要通过性价比这一关。','谨慎型']);else out.push(['价格不是唯一答案','真正击中核心偏好时，你愿意减少比较成本。','心动型']);if(c.service>=3)out.push(['持续服务优先','维护、更新和陪伴比“形式上的永久拥有”更让你安心。','服务型']);else if(c.boundary>=3)out.push(['数字边界清晰','可导出、可迁移或支出明确，会显著提升你的安全感。','边界型']);else out.push(['情境平衡派','买断、订阅与平台边界之间，你更愿意按具体价值判断。','平衡型']);return out;}
+function renderResult(){const r=state.result,top=r.ranked[0][0],second=r.ranked[1][0];$('#result-title').textContent=r.label[0];$('#resultTagline').textContent=r.label[1];$('#primaryTag').textContent=dimensions[top].name;$('#secondaryTag').textContent=dimensions[second].name;$('#resultCode').textContent='NO. '+String(Date.now()).slice(-6);$('#topMeaning').textContent=dimensions[top].meaning;$('#topDescription').textContent=dimensions[top].description;$('#scoreBars').innerHTML=r.ranked.map(([k])=>`<div class="bar-row" style="--bar:${dimensions[k].color}"><label>${dimensions[k].name}</label><span class="bar-track"><i style="width:${r.normalized[k]}%"></i></span><b>${r.normalized[k]}</b></div>`).join('');$('#constraintCards').innerHTML=constraintInfo().map(x=>`<article class="constraint-card"><header>${x[0]}<span>${x[2]}</span></header><p>${x[1]}</p></article>`).join('');const rr=$('#recallResult');if(state.recall||state.recallTag){rr.classList.add('visible');rr.innerHTML=`<div class="section-head"><h3>回看那笔“不后悔”</h3><span>你自己的真实线索</span></div><p>你想到的是 <strong>${escapeHtml(state.recall||'那笔消费')}</strong>${state.recallTag?`，当时最打动你的是“<strong>${escapeHtml(state.recallTag)}</strong>”`:''}。它与本次结果可以相互印证，也可能提醒你：真实消费总比六个分数更复杂。</p>`}else rr.classList.remove('visible');drawCard();}
+function escapeHtml(s){return s.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();ctx.stroke()}
+function wrap(ctx,text,x,y,max,lineHeight,maxLines=4){let line='',lines=[];for(const ch of text){const t=line+ch;if(ctx.measureText(t).width>max&&line){lines.push(line);line=ch}else line=t}if(line)lines.push(line);lines.slice(0,maxLines).forEach((l,i)=>ctx.fillText(l,x,y+i*lineHeight));}
+function drawCard(){if(!state.result)return;const c=$('#shareCanvas'),x=c.getContext('2d'),r=state.result,top=r.ranked[0][0],second=r.ranked[1][0],primary=dimensions[top].color,accent=dimensions[second].color;x.clearRect(0,0,c.width,c.height);x.fillStyle='#f8f6f0';x.fillRect(0,0,1080,1440);x.strokeStyle=primary;x.lineWidth=1;x.globalAlpha=.11;for(let i=60;i<1020;i+=48){x.beginPath();x.moveTo(i,180);x.lineTo(i,1380);x.stroke()}for(let i=180;i<1380;i+=48){x.beginPath();x.moveTo(60,i);x.lineTo(1020,i);x.stroke()}x.globalAlpha=1;x.strokeStyle='#17211d';x.lineWidth=6;x.strokeRect(54,54,972,1332);x.fillStyle=primary;x.fillRect(54,54,972,135);x.fillStyle='#fff';x.font='900 27px sans-serif';x.fillText('PAYMENT PROFILE / APP PAY DNA',94,135);x.textAlign='right';x.font='800 20px sans-serif';x.fillText('V1.3',986,135);x.textAlign='left';x.fillStyle='#17211d';x.font='800 20px sans-serif';x.fillText('你的付费快乐原型',94,250);x.font='900 74px serif';x.fillText(r.label[0],94,345);x.fillStyle=primary;x.fillRect(94,375,892,8);x.fillStyle='#17211d';x.font='900 31px serif';wrap(x,'“'+r.label[1]+'”',94,445,860,46,2);x.fillStyle='#fff';x.strokeStyle='#17211d';x.lineWidth=4;x.fillRect(94,535,892,160);x.strokeRect(94,535,892,160);x.fillStyle=accent;x.fillRect(94,535,12,160);x.fillStyle='#69736e';x.font='800 18px sans-serif';x.fillText('最近一次付费样本',130,580);x.fillStyle='#17211d';x.font='900 30px sans-serif';const sample=state.recall?`我为「${state.recall}」付费`:'本次未填写具体 App';x.fillText(sample,130,630);x.textAlign='right';x.font='700 20px sans-serif';x.fillText(state.recallTag?`因为：${state.recallTag}`:'按标准题库生成结果',950,673);x.textAlign='left';x.fillStyle='#69736e';x.font='800 18px sans-serif';x.fillText('快乐配方 / TOP 3',94,770);r.ranked.slice(0,3).forEach(([k],i)=>{const yy=840+i*92;x.fillStyle='#17211d';x.font='800 25px sans-serif';x.fillText(dimensions[k].name,94,yy);x.fillStyle=dimensions[k].color+'28';x.fillRect(290,yy-24,590,24);x.fillStyle=dimensions[k].color;x.fillRect(290,yy-24,590*r.normalized[k]/100,24);x.fillStyle='#17211d';x.textAlign='right';x.font='800 22px sans-serif';x.fillText(r.normalized[k],940,yy);x.textAlign='left'});x.fillStyle=accent;x.strokeStyle='#17211d';x.lineWidth=4;x.fillRect(94,1150,650,95);x.strokeRect(94,1150,650,95);x.fillStyle='#17211d';x.font='900 25px sans-serif';x.textAlign='center';x.fillText('扫码测测你的 App 付费 DNA →',419,1210);if(qrImage.complete&&qrImage.naturalWidth)x.drawImage(qrImage,800,1110,170,170);x.font='800 16px sans-serif';x.fillText('扫码进入 H5',885,1310);x.textAlign='left';x.fillStyle='#69736e';x.font='700 17px sans-serif';x.fillText('趣味自我探索 · 非科学人格诊断',94,1340)}
+function openShare(){drawCard();$('#shareDialog').showModal()}
+function downloadCard(){const a=document.createElement('a');a.download=`我的App付费DNA-${state.result.label[0]}.png`;a.href=$('#shareCanvas').toDataURL('image/png');a.click()}
+async function nativeShare(){const data={title:'我的 App 付费 DNA：'+state.result.label[0],text:state.result.label[1],url:location.href};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{try{await navigator.clipboard.writeText(location.href);alert('链接已复制，可以发给朋友了。')}catch(e){alert('请复制浏览器地址，或使用右上角分享。')}}}
+function restart(){state.index=0;state.answers=[];state.recall='';state.recallTag='';$('#appName').value='';$$('#recallChips button').forEach(x=>x.classList.remove('selected'));show('intro')}
+
+document.addEventListener('click',e=>{const a=e.target.closest('[data-action]')?.dataset.action;if(!a)return;if(a==='start')show('recall');if(a==='back-intro')show('intro');if(a==='skip-recall'){state.recall='';state.recallTag='';state.index=0;renderQuestion();show('quiz')}if(a==='begin-quiz'){state.recall=$('#appName').value.trim();state.index=0;renderQuestion();show('quiz')}if(a==='prev'){if(state.index>0){state.index--;renderQuestion()}else show('recall')}if(a==='privacy')$('#privacyDialog').showModal();if(a==='close-dialog')$('#privacyDialog').close();if(a==='share')openShare();if(a==='close-share')$('#shareDialog').close();if(a==='download-card')downloadCard();if(a==='native-share')nativeShare();if(a==='restart')restart()});
+$$('#recallChips button').forEach(b=>b.onclick=()=>{$$('#recallChips button').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');state.recallTag=b.dataset.value});
+resetScores();
